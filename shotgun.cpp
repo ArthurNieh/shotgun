@@ -1,9 +1,12 @@
 #include<iostream>
 #include<string>
+#include<cstring>
 #include<cmath>
 using namespace std;
 
 const int MaxLength = 1024;
+
+void introduction();
 
 void get_DNA_parts(char** dna_parts, int num, int* dna_part_length, int target_dna_length); //user input parts of DNA sequence
 void print_DNA_parts(char** dna_parts, int num);
@@ -17,39 +20,33 @@ int* generate_DNA_from_number(int number, int length);// for any decimal number,
 char* int_to_char(int* input, int length);
 int* char_to_int(char* input, int length);
 
+void user_input_computer_guess();
+
 int main(int argc, char* argv[]){
 
-    int target_DNA_length;
-    cout << "How long is the target DNA?"<<endl;
-    cin >> target_DNA_length;
-    char* target_DNA = new char [target_DNA_length];
-    // get_target_DNA(target_DNA, target_DNA_length);
+    introduction();
+    
+    while(1){
+        cout<< "How would you like to use this program?\n"
+            << "\"1\"\t: user input part DNA sequence and computer guess\n"
+            << "\"exit\"\t: to exit the program\n" <<endl;
+        
+        char use_mode[256] = {};
+        cin >> use_mode;
 
-    int part_DNA_number;
-    cout << "How many part DNA are there?"<<endl;
-    cin >> part_DNA_number;
-    cin.ignore();
-    char** part_DNA = new char* [part_DNA_number];
-    for(int i=0;i<part_DNA_number;i++){
-        part_DNA[i] = new char [target_DNA_length];
+        if(strcmp(use_mode,"1") == 0){
+            user_input_computer_guess();
+            cout<<endl;
+        }
+        else if(strcmp(use_mode,"exit") == 0){
+            break;
+        }
+        else{
+            cout<< "Error mode input\n" <<endl;
+        }
     }
-    //new
-    int* part_DNA_length = new int[part_DNA_number];
-
-    get_DNA_parts(part_DNA, part_DNA_number, part_DNA_length, target_DNA_length);
-    // print_DNA_parts(part_DNA, part_DNA_number);
-
-    target_DNA = int_to_char( sequence_compare(part_DNA, part_DNA_number, part_DNA_length, target_DNA_length), target_DNA_length);
-    print_DNA_sequence(target_DNA, target_DNA_length);
 
     
-    // int k,l;
-    // cin >> k >>l;
-    // int* s = generate_DNA_from_number(k,l);
-    
-    
-
-    // cout << target_DNA<<endl;
 
     return 0;
 }
@@ -57,6 +54,11 @@ int main(int argc, char* argv[]){
 
 // Functions
 
+void introduction(){
+    cout<< "Welcome to Shotgun Algorithm\n"
+        << "author : Arthur Nieh\n"<<endl;
+    return;
+}
 void get_DNA_parts(char** dna_parts, int num, int* dna_part_length, int target_dna_length){
     cout<<"Please input the part DNA sequences in ATCG:"<<endl;
     for(int i=0;i<num;i++){
@@ -157,7 +159,7 @@ int* sequence_compare(char** dna_parts, int part_dna_num, int* part_dna_length, 
 
     }
 
-    cout<<"NO DNA sequence fit";
+    cout<<"NO DNA sequence fit"<<endl;
     exit(0);
 
 }
@@ -214,4 +216,33 @@ int* char_to_int(char* input, int length){
         else output[i]=-1;
     }
     return output;
+}
+
+void user_input_computer_guess(){
+
+    int target_DNA_length;
+    cout << "How long is the target DNA?"<<endl;
+    cin >> target_DNA_length;
+    char* target_DNA = new char [target_DNA_length];
+    // get_target_DNA(target_DNA, target_DNA_length);
+
+    int part_DNA_number;
+    cout << "How many part DNA are there?"<<endl;
+    cin >> part_DNA_number;
+    cin.ignore();
+    char** part_DNA = new char* [part_DNA_number];
+    for(int i=0;i<part_DNA_number;i++){
+        part_DNA[i] = new char [target_DNA_length];
+    }
+    //new
+    int* part_DNA_length = new int[part_DNA_number];
+
+    get_DNA_parts(part_DNA, part_DNA_number, part_DNA_length, target_DNA_length);
+    // print_DNA_parts(part_DNA, part_DNA_number);
+
+    target_DNA = int_to_char( sequence_compare(part_DNA, part_DNA_number, part_DNA_length, target_DNA_length), target_DNA_length);
+    cout<<"Computer guess : ";
+    print_DNA_sequence(target_DNA, target_DNA_length);
+
+    return;
 }
