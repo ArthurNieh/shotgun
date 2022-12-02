@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
 
     get_DNA_parts(part_DNA, part_DNA_number, part_DNA_length, target_DNA_length);
     // print_DNA_parts(part_DNA, part_DNA_number);
-        
+
     target_DNA = int_to_char( sequence_compare(part_DNA, part_DNA_number, part_DNA_length, target_DNA_length), target_DNA_length);
     print_DNA_sequence(target_DNA, target_DNA_length);
 
@@ -120,12 +120,14 @@ int* sequence_compare(char** dna_parts, int part_dna_num, int* part_dna_length, 
                 int index_on_part_dna = 0;
                 bool check_for_one_part_dna = 1;
 
-                while(part_dna_int[index_on_part_dna] != -1){
+                while(part_dna_int[index_on_part_dna] != -1 && index_on_part_dna < part_dna_length[j]){
                     if(part_dna_int[index_on_part_dna] == guess_sequence[index_on_guess_sequence + index_on_part_dna]){
                         index_on_part_dna++;
                         continue;
                     }
                     else{
+                        // cout<< part_dna_int[index_on_part_dna] << "!=" << guess_sequence[index_on_guess_sequence + index_on_part_dna]<<endl;
+                        // cout<<index_on_part_dna<<endl;
                         check_for_one_part_dna = 0;
                         break;
                     }
